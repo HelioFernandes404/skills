@@ -2,6 +2,7 @@
 
 Skills I use daily for code work.
 
+- **[argocd](./argocd/SKILL.md)** — Complete ArgoCD API and CLI reference for GitOps automation across applications, ApplicationSets, projects, repositories, clusters, and accounts.
 - **[diagnose](./diagnose/SKILL.md)** — Disciplined diagnosis loop for hard bugs and performance regressions: reproduce → minimise → hypothesise → instrument → fix → regression-test.
 - **[grill-with-docs](./grill-with-docs/SKILL.md)** — Grilling session that challenges your plan against the existing domain model, sharpens terminology, and updates `CONTEXT.md` and ADRs inline.
 - **[triage](./triage/SKILL.md)** — Triage issues through a state machine of triage roles.
