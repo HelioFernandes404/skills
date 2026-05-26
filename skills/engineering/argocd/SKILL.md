@@ -1,30 +1,26 @@
 ---
 name: argocd
-description: Complete ArgoCD API and CLI skill for GitOps automation. Use when working with ArgoCD for: (1) Managing Applications - create, sync, delete, rollback, get status, (2) ApplicationSets - templated multi-cluster deployments, (3) Projects - RBAC, source/destination restrictions, sync windows, (4) Repositories - add/remove Git repos, Helm charts, OCI registries, (5) Clusters - register, rotate credentials, manage multi-cluster, (6) Accounts - generate tokens, manage users, check permissions, (7) Any ArgoCD REST API calls or argocd CLI commands. Supports both REST API (curl/HTTP) and CLI wrapper approaches with bearer token authentication.
+description: ArgoCD REST API skill for GitOps automation via HTTP/curl. Use when making direct API calls to ArgoCD for: (1) Managing Applications - create, sync, delete, get status via REST, (2) ApplicationSets - spec/generator YAML, (3) Bearer token auth setup, (4) Application Spec YAML reference, (5) Sync options, resource hooks. For argocd CLI commands, use the argocd-cli skill instead.
 ---
 
-# ArgoCD Skill
+# ArgoCD REST API Skill
 
-Complete ArgoCD operations via REST API and CLI with bearer token authentication.
+ArgoCD operations via REST API with bearer token authentication.
 
 ## Authentication Setup
 
-Generate and use bearer tokens for all operations:
-
 ```bash
-# Generate token (requires existing login)
-argocd login $ARGOCD_SERVER --username admin --password $ARGOCD_PASSWORD
+# Generate token (requires argocd login first — see argocd-cli skill)
 ARGOCD_TOKEN=$(argocd account generate-token)
 
-# Or generate for service account
+# Or for a service account
 ARGOCD_TOKEN=$(argocd account generate-token --account cibot --expires-in 7d)
 
-# Export for subsequent commands
 export ARGOCD_SERVER="argocd.example.com"
 export ARGOCD_AUTH_TOKEN="$ARGOCD_TOKEN"
 ```
 
-**Service account setup** (in argocd-cm ConfigMap):
+Service account setup (in argocd-cm ConfigMap):
 
 ```yaml
 data:
@@ -34,166 +30,17 @@ data:
 
 ## REST API Pattern
 
-All API calls use this pattern:
-
 ```bash
 curl -s -H "Authorization: Bearer $ARGOCD_AUTH_TOKEN" \
   -H "Content-Type: application/json" \
   "https://$ARGOCD_SERVER/api/v1/{endpoint}"
 ```
 
-Use the helper script at `scripts/argocd-api.sh` for common operations.
+Use `scripts/argocd-api.sh` for common operations.
 
-## Quick Reference
+## API Examples
 
-### Applications
-
-```bash
-# List all applications
-argocd app list -o json
-
-# Create application
-argocd app create myapp \
-  --repo https://github.com/org/repo.git \
-  --path manifests \
-  --dest-server https://kubernetes.default.svc \
-  --dest-namespace default \
-  --sync-policy automated \
-  --auto-prune \
-  --self-heal
-
-# Sync with options
-argocd app sync myapp --prune --force --timeout 300
-
-# Sync specific resources only
-argocd app sync myapp --resource apps:Deployment:nginx
-
-# Dry run
-argocd app sync myapp --dry-run
-
-# Wait for health
-argocd app wait myapp --health --sync --timeout 300
-
-# Get status
-argocd app get myapp -o json | jq '{health: .status.health.status, sync: .status.sync.status}'
-
-# Rollback
-argocd app history myapp
-argocd app rollback myapp 2
-
-# Delete (cascade deletes resources)
-argocd app delete myapp --cascade -y
-
-# Terminate running operation
-argocd app terminate-op myapp
-```
-
-### ApplicationSets
-
-```bash
-# Create/update ApplicationSet
-argocd appset create appset.yaml --upsert
-
-# List
-argocd appset list
-
-# Get details
-argocd appset get myappset -o yaml
-
-# Delete
-argocd appset delete myappset -y
-```
-
-### Projects
-
-```bash
-# Create project
-argocd proj create myproject -d https://kubernetes.default.svc,default -s https://github.com/org/*
-
-# Add destinations/sources
-argocd proj add-destination myproject https://kubernetes.default.svc 'team-*'
-argocd proj add-source myproject 'https://github.com/org/*'
-
-# Manage roles
-argocd proj role create myproject deployer
-argocd proj role add-policy myproject deployer -a sync -p allow -o '*'
-argocd proj role add-group myproject deployer my-sso-group
-
-# Generate role token
-argocd proj role create-token myproject deployer --expires-in 24h
-
-# Sync windows
-argocd proj windows add myproject --kind allow --schedule "0 22 * * *" --duration 2h
-argocd proj windows list myproject
-```
-
-### Repositories
-
-```bash
-# Add HTTPS repo with token
-argocd repo add https://github.com/org/repo --username git --password $GH_TOKEN
-
-# Add SSH repo
-argocd repo add git@github.com:org/repo.git --ssh-private-key-path ~/.ssh/id_rsa
-
-# Add Helm repo
-argocd repo add https://charts.example.com --type helm --name myrepo
-
-# Add OCI registry
-argocd repo add registry.example.com --type helm --enable-oci --username user --password pass
-
-# Credential template (applies to matching repos)
-argocd repocreds add https://github.com/myorg/ --username git --password $TOKEN
-
-# List/remove
-argocd repo list
-argocd repo rm https://github.com/org/repo
-```
-
-### Clusters
-
-```bash
-# Add cluster from kubeconfig context
-argocd cluster add my-context --name production
-
-# List clusters
-argocd cluster list
-
-# Get cluster details
-argocd cluster get https://production.example.com
-
-# Rotate credentials
-argocd cluster rotate-auth production
-
-# Remove cluster
-argocd cluster rm https://production.example.com
-```
-
-### Accounts
-
-```bash
-# List accounts
-argocd account list
-
-# Generate token
-argocd account generate-token --account cibot --expires-in 7d --id deploy-token
-
-# Check permissions
-argocd account can-i sync applications '*'
-argocd account can-i get applications 'myproject/*'
-
-# Update password
-argocd account update-password --account admin
-
-# Get user info
-argocd account get-user-info
-```
-
-## REST API Examples
-
-See `references/api-reference.md` for complete endpoint documentation.
-
-### Create Application via API
+### Create Application
 
 ```bash
 curl -X POST -H "Authorization: Bearer $ARGOCD_AUTH_TOKEN" \
@@ -220,72 +67,39 @@ curl -X POST -H "Authorization: Bearer $ARGOCD_AUTH_TOKEN" \
   }'
 ```
 
-### Sync Application via API
+### Sync Application
 
 ```bash
 curl -X POST -H "Authorization: Bearer $ARGOCD_AUTH_TOKEN" \
   -H "Content-Type: application/json" \
   "https://$ARGOCD_SERVER/api/v1/applications/myapp/sync" \
-  -d '{
-    "revision": "HEAD",
-    "prune": true,
-    "dryRun": false,
-    "strategy": {"hook": {}},
-    "syncOptions": {"items": ["CreateNamespace=true"]}
-  }'
+  -d '{"revision": "HEAD", "prune": true, "strategy": {"hook": {}}}'
 ```
 
-### Get Application Status
+### Poll Sync Status
+
+`POST /sync` returns immediately — poll until complete:
 
 ```bash
-curl -s -H "Authorization: Bearer $ARGOCD_AUTH_TOKEN" \
+until curl -s -H "Authorization: Bearer $ARGOCD_AUTH_TOKEN" \
   "https://$ARGOCD_SERVER/api/v1/applications/myapp" | \
-  jq '{name: .metadata.name, health: .status.health.status, sync: .status.sync.status}'
+  jq -e '.status.operationState.phase == "Succeeded"' > /dev/null; do
+  sleep 5
+done
 ```
 
-## Application Spec Reference
+## Application Spec — Non-Obvious Parts
+
+The agent knows standard ArgoCD spec fields. These parts are easy to get wrong:
 
 ```yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
 metadata:
-  name: myapp
-  namespace: argocd
   finalizers:
+    # Exact string required for cascade delete to work
     - resources-finalizer.argocd.argoproj.io
+
 spec:
-  project: default
-
-  source:
-    repoURL: https://github.com/org/repo.git
-    targetRevision: HEAD
-    path: manifests
-
-    # Helm options
-    helm:
-      releaseName: my-release
-      valueFiles: [values.yaml, values-prod.yaml]
-      parameters:
-        - name: image.tag
-          value: v1.0.0
-
-    # Kustomize options
-    kustomize:
-      namePrefix: prod-
-      images: [gcr.io/image:v1.0.0]
-
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: default
-
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
-      - PruneLast=true
     retry:
       limit: 5
       backoff:
@@ -299,159 +113,25 @@ spec:
       jsonPointers: [/spec/replicas]
 ```
 
-## ApplicationSet Generators
-
-See `references/api-reference.md` for complete generator patterns.
-
-```yaml
-apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  name: cluster-apps
-  namespace: argocd
-spec:
-  generators:
-    # List generator
-    - list:
-        elements:
-          - cluster: dev
-            url: https://dev.example.com
-          - cluster: prod
-            url: https://prod.example.com
-
-    # Cluster generator
-    - clusters:
-        selector:
-          matchLabels:
-            environment: production
-
-    # Git directory generator
-    - git:
-        repoURL: https://github.com/org/apps.git
-        directories:
-          - path: apps/*
-
-    # Matrix generator (combine two generators)
-    - matrix:
-        generators:
-          - clusters: {}
-          - git:
-              repoURL: https://github.com/org/apps.git
-              directories: [{path: apps/*}]
-
-  template:
-    metadata:
-      name: '{{.cluster}}-{{.path.basename}}'
-    spec:
-      project: default
-      source:
-        repoURL: https://github.com/org/apps.git
-        targetRevision: HEAD
-        path: '{{.path.path}}'
-      destination:
-        server: '{{.url}}'
-        namespace: '{{.path.basename}}'
-```
-
-## Sync Options Reference
-
-| Option | Description |
-|--------|-------------|
-| `Prune=true` | Delete resources not in Git |
-| `PruneLast=true` | Prune after sync completes |
-| `Replace=true` | Use replace instead of apply |
-| `ServerSideApply=true` | Use server-side apply |
-| `CreateNamespace=true` | Create namespace if missing |
-| `ApplyOutOfSyncOnly=true` | Only sync changed resources |
-| `Validate=false` | Skip kubectl validation |
-| `Force=true` | Force resource replacement |
-| `RespectIgnoreDifferences=true` | Respect ignoreDifferences on sync |
-
 ## Resource Hooks and Waves
 
 ```yaml
 metadata:
   annotations:
-    # Sync wave (lower = earlier)
-    argocd.argoproj.io/sync-wave: "-1"
-
-    # Hook phase
+    argocd.argoproj.io/sync-wave: "-1"   # lower = runs earlier during sync
     argocd.argoproj.io/hook: PreSync|Sync|PostSync|SyncFail|PostDelete
-
-    # Hook deletion policy
     argocd.argoproj.io/hook-delete-policy: HookSucceeded|HookFailed|BeforeHookCreation
 ```
 
-## Health Status Values
+## Gotchas
 
-| Status | Description |
-|--------|-------------|
-| `Healthy` | Resource running correctly |
-| `Progressing` | Deployment in progress |
-| `Degraded` | Health check failed |
-| `Suspended` | Resource paused |
-| `Missing` | Resource doesn't exist |
-| `Unknown` | Cannot determine health |
+- **`POST /sync` is fire-and-forget.** It returns before sync finishes. Poll `status.operationState.phase` for `Succeeded` or `Failed`.
+- **Always set `namespace: argocd` in metadata.** Omitting it succeeds on create but causes 404 on subsequent GET/sync calls.
+- **List endpoint paginates at 100 items.** Check `metadata.continue` in the response and loop until empty to get all apps.
+- **`sync-wave` only affects sync order, not health check order.** Resources in wave -1 still wait for health checks from all resources, not just earlier waves.
+- **Finalizer string must be exact.** A typo silently skips cascade delete — resources stay running after app deletion.
 
-## CLI Global Flags
+## Progressive Reference Loading
 
-| Flag | Description |
-|------|-------------|
-| `--server` | ArgoCD server address |
-| `--auth-token` | Bearer token |
-| `--grpc-web` | Use gRPC-web (for proxies) |
-| `--insecure` | Skip TLS verification |
-| `--plaintext` | Disable TLS |
-| `--config` | Config file path |
-| `-o json/yaml/wide` | Output format |
-
-## Error Handling
-
-```bash
-# Check if app exists before operations
-if argocd app get myapp &>/dev/null; then
-  argocd app sync myapp
-else
-  argocd app create myapp ...
-fi
-
-# Wait with timeout and handle failure
-if ! argocd app wait myapp --health --timeout 300; then
-  echo "App failed to become healthy"
-  argocd app get myapp
-  exit 1
-fi
-
-# Idempotent upsert pattern
-argocd app create myapp --upsert ...
-argocd repo add https://repo --upsert ...
-```
-
-## Common Workflows
-
-### Deploy and Wait Pattern
-
-```bash
-argocd app sync myapp --prune --async
-argocd app wait myapp --health --sync --timeout 300
-```
-
-### Canary/Blue-Green with Argo Rollouts
-
-```bash
-# Promote rollout
-argocd app actions run myapp promote --kind Rollout --resource-name my-rollout
-```
-
-### Multi-Cluster Deployment
-
-```bash
-# Register clusters
-argocd cluster add dev-context --name dev
-argocd cluster add prod-context --name prod
-
-# Use ApplicationSet with cluster generator
-```
-
-For complete API endpoint documentation, see `references/api-reference.md`.
-For complete CLI command reference, see `references/cli-reference.md`.
+- Read `references/api-reference.md` when you need complete endpoint docs, query params, pagination details, or error codes.
+- Read `references/api-reference.md` for ApplicationSet generator patterns or the full sync option list.

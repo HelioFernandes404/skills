@@ -146,7 +146,8 @@ Software engineering fundamentals matter more than ever. These skills are my bes
 
 Skills I use daily for code work.
 
-- **[argocd](./skills/engineering/argocd/SKILL.md)** — Complete ArgoCD API and CLI reference for GitOps automation across applications, ApplicationSets, projects, repositories, clusters, and accounts.
+- **[argocd](./skills/engineering/argocd/SKILL.md)** — ArgoCD REST API skill for GitOps automation via HTTP/curl: create/sync apps, ApplicationSet specs, bearer token auth, sync options, resource hooks.
+- **[argocd-cli](./skills/engineering/argocd-cli/SKILL.md)** — ArgoCD CLI skill for GitOps automation via the `argocd` command: login, apps, appsets, projects, repos, clusters, accounts.
 - **[diagnose](./skills/engineering/diagnose/SKILL.md)** — Disciplined diagnosis loop for hard bugs and performance regressions: reproduce → minimise → hypothesise → instrument → fix → regression-test.
 - **[grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)** — Grilling session that challenges your plan against the existing domain model, sharpens terminology, and updates `CONTEXT.md` and ADRs inline.
 - **[triage](./skills/engineering/triage/SKILL.md)** — Triage issues through a state machine of triage roles.
