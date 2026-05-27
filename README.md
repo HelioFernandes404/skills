@@ -35,4 +35,6 @@ General workflow tools, not code-specific.
 - **[caveman](./skills/caveman/SKILL.md)** — Ultra-compressed communication mode. Cuts token usage ~75% by dropping filler while keeping full technical accuracy.
 - **[grill-me](./skills/grill-me/SKILL.md)** — Get relentlessly interviewed about a plan or design until every branch of the decision tree is resolved.
 - **[handoff](./skills/handoff/SKILL.md)** — Compact the current conversation into a handoff document so another agent can continue the work.
+- **[audit-skill](./skills/audit-skill/SKILL.md)** — Audit a SKILL.md against agentskills.io best practices (scope, context efficiency, calibration, patterns). Feeds findings into skill-creator for iteration.
+- **[standup](./skills/standup/SKILL.md)** — Write a short daily summary from today's GitHub commits. Tries gh MCP first, falls back to gh CLI script.
 - **[write-a-skill](./skills/write-a-skill/SKILL.md)** — Create new skills with proper structure, progressive disclosure, and bundled resources.

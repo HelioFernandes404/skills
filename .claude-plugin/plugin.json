@@ -2,6 +2,7 @@
   "name": "helio-skills",
   "skills": [
     "./skills/argocd",
+    "./skills/audit-skill",
     "./skills/argocd-cli",
     "./skills/caveman",
     "./skills/diagnose",
@@ -16,6 +17,7 @@
     "./skills/triage",
     "./skills/to-issues",
     "./skills/to-prd",
+    "./skills/standup",
     "./skills/write-a-skill",
     "./skills/zoom-out"
   ]
