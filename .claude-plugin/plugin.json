@@ -1,21 +1,21 @@
 {
   "name": "helio-skills",
   "skills": [
-    "./skills/engineering/argocd",
-    "./skills/engineering/argocd-cli",
-    "./skills/engineering/diagnose",
-    "./skills/engineering/grill-with-docs",
-    "./skills/engineering/triage",
-    "./skills/engineering/improve-codebase-architecture",
-    "./skills/engineering/setup-matt-pocock-skills",
-    "./skills/engineering/tdd",
-    "./skills/engineering/to-issues",
-    "./skills/engineering/to-prd",
-    "./skills/engineering/zoom-out",
-    "./skills/engineering/prototype",
-    "./skills/productivity/caveman",
-    "./skills/productivity/grill-me",
-    "./skills/productivity/handoff",
-    "./skills/productivity/write-a-skill"
+    "./skills/argocd",
+    "./skills/argocd-cli",
+    "./skills/caveman",
+    "./skills/diagnose",
+    "./skills/grill-me",
+    "./skills/grill-with-docs",
+    "./skills/handoff",
+    "./skills/improve-codebase-architecture",
+    "./skills/prototype",
+    "./skills/setup-matt-pocock-skills",
+    "./skills/tdd",
+    "./skills/triage",
+    "./skills/to-issues",
+    "./skills/to-prd",
+    "./skills/write-a-skill",
+    "./skills/zoom-out"
   ]
 }
