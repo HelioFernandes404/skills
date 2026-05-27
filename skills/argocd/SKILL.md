@@ -1,6 +1,6 @@
 ---
 name: argocd
-description: ArgoCD REST API skill for GitOps automation via HTTP/curl. Use when making direct API calls to ArgoCD for: (1) Managing Applications - create, sync, delete, get status via REST, (2) ApplicationSets - spec/generator YAML, (3) Bearer token auth setup, (4) Application Spec YAML reference, (5) Sync options, resource hooks. For argocd CLI commands, use the argocd-cli skill instead.
+description: "ArgoCD REST API skill for GitOps automation via HTTP/curl. Use when making direct API calls to ArgoCD for: (1) Managing Applications - create, sync, delete, get status via REST, (2) ApplicationSets - spec/generator YAML, (3) Bearer token auth setup, (4) Application Spec YAML reference, (5) Sync options, resource hooks. For argocd CLI commands, use the argocd-cli skill instead."
 ---
 
 # ArgoCD REST API Skill
