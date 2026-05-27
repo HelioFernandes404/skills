@@ -1,0 +1,22 @@
+{
+  "name": "helio-skills",
+  "skills": [
+    "./skills/argocd",
+    "./skills/argocd-cli",
+    "./skills/caveman",
+    "./skills/diagnose",
+    "./skills/grill-me",
+    "./skills/grill-with-docs",
+    "./skills/handoff",
+    "./skills/html-explainer",
+    "./skills/improve-codebase-architecture",
+    "./skills/prototype",
+    "./skills/setup-matt-pocock-skills",
+    "./skills/tdd",
+    "./skills/triage",
+    "./skills/to-issues",
+    "./skills/to-prd",
+    "./skills/write-a-skill",
+    "./skills/zoom-out"
+  ]
+}
