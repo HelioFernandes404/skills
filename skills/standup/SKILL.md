@@ -13,10 +13,10 @@ Write a concise daily summary from GitHub commits. Keep it short — 3–7 bulle
 - `q`: `author:USERNAME committer-date:YYYY-MM-DD`
 - Use today's date and the authenticated user's login
 
-**Otherwise**, run the bundled script:
+**Otherwise**, run the bundled script — it lives at `.agents/skills/standup/scripts/` relative to the vault root:
 ```bash
-bash scripts/get-commits.sh          # today
-bash scripts/get-commits.sh 2025-01-15  # specific date
+bash .agents/skills/standup/scripts/get-commits.sh          # today
+bash .agents/skills/standup/scripts/get-commits.sh 2025-01-15  # specific date
 ```
 
 Output: one JSON object per line — `repo`, `message`, `sha`, `date`.
@@ -33,8 +33,13 @@ Group commits by repo. Distill each group into one bullet:
 ```
 
 Rules:
+- Write in the same language the user used in their request
 - Past tense, imperative voice (`added`, `fixed`, `refactored`)
 - No intro, no "here is your summary", no trailing commentary
+
+## Writing to a daily note
+
+If the user asks to write to an existing note, read the file first to understand its structure. Add the commits block inside the most appropriate existing section (e.g., under `## Night`) rather than appending a new top-level section at the end.
 
 ## Gotchas
 
