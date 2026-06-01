@@ -17,6 +17,7 @@ Skills for daily code work.
 - **[argocd](./skills/argocd/SKILL.md)** — ArgoCD REST API skill for GitOps automation via HTTP/curl: create/sync apps, ApplicationSet specs, bearer token auth, sync options, resource hooks.
 - **[argocd-cli](./skills/argocd-cli/SKILL.md)** — ArgoCD CLI skill for GitOps automation via the `argocd` command: login, apps, appsets, projects, repos, clusters, accounts.
 - **[diagnose](./skills/diagnose/SKILL.md)** — Disciplined diagnosis loop for hard bugs and performance regressions: reproduce → minimise → hypothesise → instrument → fix → regression-test.
+- **[golang-expert](./skills/golang-expert/SKILL.md)** — Senior Go development skill for idiomatic concurrency, microservices, profiling, generics, interfaces, and production-grade testing.
 - **[grill-with-docs](./skills/grill-with-docs/SKILL.md)** — Grilling session that challenges your plan against the existing domain model, sharpens terminology, and updates `CONTEXT.md` and ADRs inline.
 - **[html-explainer](./skills/html-explainer/SKILL.md)** — Produce a self-contained HTML file instead of markdown for high-density visual output: comparisons, timelines, charts, slides, interactive prototypes, custom editing tools.
 - **[improve-codebase-architecture](./skills/improve-codebase-architecture/SKILL.md)** — Find deepening opportunities in a codebase, informed by the domain language in `CONTEXT.md` and the decisions in `docs/adr/`.

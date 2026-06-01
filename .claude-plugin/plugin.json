@@ -6,6 +6,7 @@
     "./skills/argocd-cli",
     "./skills/caveman",
     "./skills/diagnose",
+    "./skills/golang-expert",
     "./skills/grill-me",
     "./skills/grill-with-docs",
     "./skills/handoff",
