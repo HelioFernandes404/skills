@@ -20,6 +20,7 @@
     "./skills/to-prd",
     "./skills/standup",
     "./skills/write-a-skill",
-    "./skills/zoom-out"
+    "./skills/zoom-out",
+    "./skills/frontend-design"
   ]
 }

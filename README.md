@@ -19,6 +19,7 @@ Skills for daily code work.
 - **[diagnose](./skills/diagnose/SKILL.md)** — Disciplined diagnosis loop for hard bugs and performance regressions: reproduce → minimise → hypothesise → instrument → fix → regression-test.
 - **[golang-expert](./skills/golang-expert/SKILL.md)** — Senior Go development skill for idiomatic concurrency, microservices, profiling, generics, interfaces, and production-grade testing.
 - **[grill-with-docs](./skills/grill-with-docs/SKILL.md)** — Grilling session that challenges your plan against the existing domain model, sharpens terminology, and updates `CONTEXT.md` and ADRs inline.
+- **[frontend-design](./skills/frontend-design/SKILL.md)** — Create distinctive, production-grade frontend interfaces (components, pages, dashboards, landing pages) with intentional aesthetic direction that avoids generic AI aesthetics.
 - **[html-explainer](./skills/html-explainer/SKILL.md)** — Produce a self-contained HTML file instead of markdown for high-density visual output: comparisons, timelines, charts, slides, interactive prototypes, custom editing tools.
 - **[improve-codebase-architecture](./skills/improve-codebase-architecture/SKILL.md)** — Find deepening opportunities in a codebase, informed by the domain language in `CONTEXT.md` and the decisions in `docs/adr/`.
 - **[prototype](./skills/prototype/SKILL.md)** — Build a throwaway prototype to flesh out a design — either a runnable terminal app for state/business-logic questions, or several radically different UI variations toggleable from one route.
