@@ -5,6 +5,8 @@ description: Produce a self-contained, rich HTML file instead of markdown to com
 
 # html-explainer
 
+> **Requirement:** Invoke the `frontend-design` skill first, before any planning or code. Use its aesthetic direction to drive all visual decisions in the HTML output.
+
 When producing output that has meaningful structure, comparisons, timelines, code explanations, reports, or plans, a self-contained HTML file is almost always better than markdown. Markdown gets skimmed; HTML gets read.
 
 ## Why Use HTML?
@@ -156,14 +158,15 @@ Borrow or adapt these prompts directly when invoking this skill or when drafting
 
 ## What to do when the skill triggers
 
-1. Read the user's request carefully — identify the content type and the information they want communicated.
-2. Choose the pattern from the table above.
-3. Read `references/pattern-catalog.md` for the selected pattern.
-4. If the pattern is an editor, read `references/editor-templates.md` too.
-5. If an `examples/` directory is available, open the closest matching example HTML file and borrow its visual treatment.
-6. Write the complete HTML to a file named descriptively (e.g., `feature-auth-explainer.html`, `week-23-status.html`, `refactor-plan.html`). Save it in the project root or wherever makes sense for the context.
-7. Open it in the browser if possible: `xdg-open <filename>.html`
-8. Tell the user the filename and what pattern you used.
+1. **Invoke the `frontend-design` skill** — establish the aesthetic direction before touching any HTML.
+2. Read the user's request carefully — identify the content type and the information they want communicated.
+3. Choose the pattern from the table above.
+4. Read `references/pattern-catalog.md` for the selected pattern.
+5. If the pattern is an editor, read `references/editor-templates.md` too.
+6. If an `examples/` directory is available, open the closest matching example HTML file and borrow its visual treatment.
+7. Write the complete HTML to a file named descriptively (e.g., `feature-auth-explainer.html`, `week-23-status.html`, `refactor-plan.html`). Save it in the project root or wherever makes sense for the context.
+8. Open it in the browser if possible: `xdg-open <filename>.html`
+9. Tell the user the filename and what pattern you used.
 
 ---
 
